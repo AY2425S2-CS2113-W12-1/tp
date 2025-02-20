@@ -1,0 +1,33 @@
+
+[MAIN]   Received input: hello
+[MAIN]   Command: hello is invalid
+
+[MAIN]   Received input: input
+[MAIN]   Command: input is invalid
+
+[MAIN]   Received input: kdfjgn
+[MAIN]   Command: kdfjgn is invalid
+
+[MAIN]   Received input: -h
+[MAIN]   Printing help message.
+
+[MAIN]   Received input: printmods
+[MAIN]   Displaying mod list.
+
+[MAIN]   Received input: helloffff
+[MAIN]   Command: helloffff is invalid
+
+[MAIN]   Received input: safd
+[MAIN]   Command: safd is invalid
+
+[MAIN]   Received input: exit
+[MAIN]   Exiting application.
+
+[MAIN]   Received input: hello
+[MAIN]   Command: hello is invalid
+
+[MAIN]   Received input: -h
+[MAIN]   Printing help message.
+
+[MAIN]   Received input: exit
+[MAIN]   Exiting application.

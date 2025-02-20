@@ -1,0 +1,20 @@
+
+
+~~~~ SESSION 2025-02-12 22:31:00 ~~~~
+
+
+[MAIN]   Received input: s1
+[MAIN]   Command: s1 is invalid
+
+[MAIN]   Received input: exit
+[MAIN]   Exiting application.
+
+
+~~~~ SESSION 2025-02-12 22:31:04 ~~~~
+
+
+[MAIN]   Received input: s2
+[MAIN]   Command: s2 is invalid
+
+[MAIN]   Received input: exit
+[MAIN]   Exiting application.
