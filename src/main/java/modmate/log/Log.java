@@ -39,7 +39,9 @@ public class Log {
      * @param message The message to print.
      */
     public static void printLog(String message) {
-        System.out.println(message);
+        if (isLoggingEnabled()) {
+            System.out.println(message);
+        }
     }
 
     /**
@@ -49,22 +51,24 @@ public class Log {
      * @param message The message to save to the log file.
      */
     public static void saveLog(String message) {
-        try {
-            File directory = new File(LOG_DIRECTORY);
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
-
-            try (PrintWriter out = new PrintWriter(new FileWriter(LOG_FILE, true))) {
-                if (isNewSession) {
-                    String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-                    out.println("\n\n===== New Logging Session: " + timeStamp + " =====");
-                    isNewSession = false;
+        if (isLoggingEnabled()) {
+            try {
+                File directory = new File(LOG_DIRECTORY);
+                if (!directory.exists()) {
+                    directory.mkdirs();
                 }
-                out.println(message);
+
+                try (PrintWriter out = new PrintWriter(new FileWriter(LOG_FILE, true))) {
+                    if (isNewSession) {
+                        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                        out.println("\n\n===== New Logging Session: " + timeStamp + " =====");
+                        isNewSession = false;
+                    }
+                    out.println(message);
+                }
+            } catch (IOException e) {
+                System.err.println("Failed to write log to file: " + e.getMessage());
             }
-        } catch (IOException e) {
-            System.err.println("Failed to write log to file: " + e.getMessage());
         }
     }
 

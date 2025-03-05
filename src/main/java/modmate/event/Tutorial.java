@@ -11,6 +11,7 @@ public class Tutorial extends Event {
      * Constructs a Tutorial object with the specified details, including the TA.
      *
      * @param period the period when the tutorial occurs
+     * @param location the location where the tutorial takes place
      * @param tutor the name of the teaching assistant for the tutorial
      */
     public Tutorial(Period period, String location, String tutor) {

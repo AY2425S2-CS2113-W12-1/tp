@@ -1,4 +1,3 @@
-Logging is enabled.
 Welcome to ModMate!
 Enter command ('exit' to quit, '-h' for help):
 Enter command ('exit' to quit, '-h' for help):

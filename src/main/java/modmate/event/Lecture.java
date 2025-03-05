@@ -4,6 +4,9 @@ package modmate.event;
  * Represents a lecture event, which is a specific type of event that includes
  * information about the lecturer in addition to the general event details such as
  * the day, time, duration, cancelled weeks, and location.
+ * <p>
+ * A lecture is a scheduled event with a lecturer, and it extends the {@link Event} class.
+ * </p>
  */
 public class Lecture extends Event {
     private final String lecturer;
@@ -11,10 +14,7 @@ public class Lecture extends Event {
     /**
      * Constructs a Lecture object with the specified details.
      *
-     * @param dayOfWeek the day of the week when the lecture occurs
-     * @param startTime the start time of the lecture
-     * @param duration the duration of the lecture in hours
-     * @param cancelledWeeks a list of weeks when the lecture is cancelled
+     * @param period the time period when the lecture occurs, including the day, start time, and duration
      * @param location the location where the lecture takes place
      * @param lecturer the name of the lecturer delivering the lecture
      */

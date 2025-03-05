@@ -23,7 +23,7 @@ public abstract class Event {
     /**
      * Gets the period when the event occurs.
      *
-     * @return the period
+     * @return the period during which the event takes place
      */
     public Period getPeriod() {
         return this.period;
@@ -41,7 +41,7 @@ public abstract class Event {
     /**
      * Sets the location of the event.
      *
-     * @param location the location to set
+     * @param location the new location of the event
      */
     public void setLocation(String location) {
         this.location = location;
