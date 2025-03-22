@@ -76,7 +76,8 @@ public class Mod {
                 "\nUnits: " + attributes.getUnits() +
                 "\nGraded: " + attributes.isGraded() +
                 "\nPrerequisites: " + attributes.getPrerequisites() +
-                "\nWorkload: " + attributes.getWorkload();
+                "\nWorkload: " + attributes.getWorkload() +
+                "\nClass Slots: " + attributes.listClassSlots();
     }
 
     /**

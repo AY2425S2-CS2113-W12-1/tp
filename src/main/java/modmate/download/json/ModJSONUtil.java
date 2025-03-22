@@ -24,4 +24,10 @@ public class ModJSONUtil {
         return this.jsonObject.getJSONArray(key.toString());
     }
 
+    public JSONObject getJSONObject() {
+        return this.jsonObject;
+        // I'M SORRY OKAY I just genuinely Don't understand this code im sorry 0_0 I'm very tired.
+        // Cheating my way out of abstraction hell
+    }
+
 }

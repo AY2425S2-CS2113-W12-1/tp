@@ -1,13 +1,22 @@
 package modmate.download.json;
 
-import java.util.Collections;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Collections;
 
+import modmate.mod.attribute.classslot.ClassSlot;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import modmate.lesson.EventFactory;
+import modmate.lesson.Period;
+import modmate.lesson.types.Lesson;
 import modmate.mod.Mod;
 import modmate.mod.attribute.Faculty;
 import modmate.mod.attribute.ModAttributes;
@@ -88,7 +97,107 @@ public class ModJSONParser {
                 getUnits(),
                 getIsGraded(),
                 getPrerequisites(),
-                getWorkload());
+                getWorkload(),
+                getClassSlots());
+    }
+
+    /**
+     * Retrieves the class slots of the module from the Events in the JSON data.
+     *
+     * @return a list of class slots
+     */
+    private List<ClassSlot> getClassSlots() {
+        List<Lesson> events = getAllModEvents();
+        Map<String, List<Lesson>> eventMap = new HashMap<>();
+
+        for (Lesson event : events) {
+            eventMap.computeIfAbsent(event.getId(), k -> new ArrayList<>()).add(event);
+        }
+
+        List<ClassSlot> classSlots = new ArrayList<>();
+        for (Map.Entry<String, List<Lesson>> entry : eventMap.entrySet()) {
+            classSlots.add(new ClassSlot(entry.getValue(), entry.getKey()));
+        }
+
+        classSlots.sort((slot1, slot2) -> {
+            // This is just to compare class numbers in the format of "1A", "1B", "1C", etc.
+            // Its unnecessary but it was annoying me
+            String classNo1 = slot1.getClassNo();
+            String classNo2 = slot2.getClassNo();
+
+            String[] parts1 = classNo1.split("(?<=\\d)(?=\\D)");
+            String[] parts2 = classNo2.split("(?<=\\d)(?=\\D)");
+
+            int numComparison = Integer.compare(Integer.parseInt(parts1[0]), Integer.parseInt(parts2[0]));
+            if (numComparison != 0) {
+                return numComparison;
+            }
+
+            if (parts1.length > 1 && parts2.length > 1) {
+                return parts1[1].compareTo(parts2[1]);
+            } else if (parts1.length > 1) {
+                return 1;
+            } else if (parts2.length > 1) {
+                return -1;
+            }
+
+            return 0;
+        });
+
+        return classSlots;
+    }
+
+
+
+    /**
+     * Retrieves all module events from the JSON data.
+     *
+     * @return a list of events
+     */
+    private List<Lesson> getAllModEvents() {
+        JSONObject jsonObject = jsonUtil.getJSONObject();
+        // I know, I'm sorry, I'm too tired to figure out how the abstract version works sorry
+        List<Lesson> events = new ArrayList<>();
+
+        JSONArray semesterDataArray = jsonObject.getJSONArray("semesterData");
+        for (int i = 0; i < semesterDataArray.length(); i++) {
+            // For each semester
+            JSONArray timetableArray = semesterDataArray.getJSONObject(i).getJSONArray("timetable");
+
+            for (int j = 0; j < timetableArray.length(); j++) {
+                // For each event in the timetable
+                JSONObject eventObj = timetableArray.getJSONObject(j);
+
+                // Extract the weeks array
+                JSONArray weeksArray = eventObj.getJSONArray("weeks");
+                List<Integer> weeks = new ArrayList<>();
+                for (int k = 0; k < weeksArray.length(); k++) {
+                    weeks.add(weeksArray.getInt(k));
+                }
+
+                HashMap<Integer, Boolean> occurrenceByWeek = new HashMap<>();
+
+                for (int week : weeks) {
+                    occurrenceByWeek.put(week, true);
+                }
+
+                Period period = new Period(
+                        DayOfWeek.valueOf(eventObj.getString("day").toUpperCase()),
+                        LocalTime.parse(eventObj.getString("startTime"), DateTimeFormatter.ofPattern("HHmm")),
+                        LocalTime.parse(eventObj.getString("endTime"), DateTimeFormatter.ofPattern("HHmm")),
+                        occurrenceByWeek
+                );
+
+                // Create a new Event of the correct type for it
+                events.add(EventFactory.createEvent(
+                        eventObj.getString("lessonType"),
+                        period,
+                        eventObj.getString("venue"),
+                        eventObj.getString("classNo")
+                ));
+            }
+        }
+        return events;
     }
 
     /**

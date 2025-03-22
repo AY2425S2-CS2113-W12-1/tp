@@ -1,4 +1,4 @@
-package modmate.event;
+package modmate.lesson;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -41,7 +41,7 @@ public class Period {
      * @param endTime The end time of the period.
      * @param occurrenceByWeek A map indicating the occurrence of the period in specific weeks.
      */
-    private Period(DayOfWeek day, LocalTime startTime, LocalTime endTime, HashMap<Integer, Boolean> occurrenceByWeek) {
+    public Period(DayOfWeek day, LocalTime startTime, LocalTime endTime, HashMap<Integer, Boolean> occurrenceByWeek) {
         this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
