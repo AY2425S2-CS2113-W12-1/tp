@@ -1,0 +1,25 @@
+name: Notify Telegram about comment
+
+on:
+    issue_comment:
+        types: [created]
+
+env:
+    REPO: ${{ github.repository }}
+    ACTOR: ${{ github.actor }}
+    ID: ${{ github.event.issue.id }}
+    TITLE: ${{ github.event.issue.title }}
+    URL: ${{ github.event.comment.url }}
+
+jobs:
+  build:
+    if: ${{ github.env.REPO == 'AY2425S2-CS2113-W12-1/tp' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send message to Telegram
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.CHAT_ID }}
+          token: ${{ secrets.BOT_TOKEN }}
+          message: |
+            $ACTOR left a [comment]($URL) on issue #$ID ($TITLE)

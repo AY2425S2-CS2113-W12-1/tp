@@ -1,0 +1,26 @@
+name: Notify Telegram about issue
+
+on:
+    issues:
+        types: [opened, closed, reopened]
+
+env:
+    REPO: ${{ github.repository }}
+    ACTOR: ${{ github.actor }}
+    ACTION: ${{ github.event.action }}
+    ID: ${{ github.event.issue.id }}
+    TITLE: ${{ github.event.issue.title }}
+    URL: https://github.com/$REPO/issues/$ID
+
+jobs:
+  build:
+    if: ${{ github.env.REPO == 'AY2425S2-CS2113-W12-1/tp' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send message to Telegram
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.CHAT_ID }}
+          token: ${{ secrets.BOT_TOKEN }}
+          message: |
+            $ACTOR $ACTION [issue #$ID ($TITLE)]($URL)

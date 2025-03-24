@@ -1,0 +1,36 @@
+name: Notify Telegram about Java CI
+
+on:
+    workflow_run:
+        workflows: ["Java CI"]
+        types: [completed]
+
+env:
+    REPO_MATCH: ${{ github.repository == 'AY2425S2-CS2113-W12-1/tp' }}
+    ACTOR: ${{ github.actor }}
+    JAVA_CI_SUCCESS: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+jobs:
+  on-success:
+    if: ${{ github.env.REPO_MATCH && github.env.JAVA_CI_SUCCESS }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send message to Telegram
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.CHAT_ID }}
+          token: ${{ secrets.BOT_TOKEN }}
+          message: |
+            $ACTOR's recent edits have passed all Java CI checks
+
+  on-failure:
+    if: ${{ github.env.REPO_MATCH && !github.env.JAVA_CI_SUCCESS }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send message to Telegram
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.CHAT_ID }}
+          token: ${{ secrets.BOT_TOKEN }}
+          message: |
+            $ACTOR's recent edits did not pass the Java CI checks
