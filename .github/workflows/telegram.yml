@@ -4,7 +4,7 @@ on: [issue_comment, issues, push, pull_request_target]
 
 jobs:
   notify_telegram:
-    # if: github.repository == 'AY2425S2-CS2113-W12-1/tp'
+    if: github.repository == 'AY2425S2-CS2113-W12-1/tp'
     runs-on: ubuntu-latest
     steps:
       - name: Notify the Telegram group chat
