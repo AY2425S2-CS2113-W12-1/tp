@@ -24,14 +24,6 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        for (int i = 0; i < args.length; i++) {
-            if (args[i].equals("--startYear") && i + 1 < args.length) {
-                int startYear = Integer.parseInt(args[i + 1]);
-                CommandCenter.allModCodesAndNames = NUSModsAPI.fetchAllModCodes(startYear);
-                log.info("Start year set to: " + startYear);
-            }
-        }
-
         User currentUser = new User();
 
         Scanner scanner = new Scanner(System.in);
