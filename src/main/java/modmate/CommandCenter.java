@@ -32,12 +32,24 @@ public class CommandCenter {
      */
     public static Optional<Mod> modFromCodeOrName(String modCodeOrNameGiven) {
         // First, check for a match with the module code (key)
-        Optional<CondensedMod> condensedMod = Optional.ofNullable(
-                allModCodesAndNames.get(modCodeOrNameGiven.toUpperCase())
-        );
+        String key = modCodeOrNameGiven.toUpperCase();
+        CondensedMod mod = allModCodesAndNames.get(key);
+
+        if (mod == null) {
+            // Try finding by name
+            for (CondensedMod m : allModCodesAndNames.values()) {
+                if (m.getName().equalsIgnoreCase(modCodeOrNameGiven)) {
+                    mod = m;
+                    break;
+                }
+            }
+        }
+
+        Optional<CondensedMod> condensedMod = Optional.ofNullable(mod);
+
 
         // If a match is found, retrieve mod details using the module code
-        return condensedMod.flatMap(mod -> NUSModsAPI.fetchModuleByCode(mod.getCode()));
+        return condensedMod.flatMap(module -> NUSModsAPI.fetchModuleByCode(module.getCode()));
     }
 
     /**
