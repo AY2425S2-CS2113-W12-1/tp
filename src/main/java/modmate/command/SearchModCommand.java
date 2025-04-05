@@ -41,18 +41,14 @@ public class SearchModCommand implements Command {
 
     private static List<Mod> getSearchResults(String searchTerm) {
         logUtil.info("Internally invoking search for " + searchTerm + ".");
-        // Search inside Map allModCodesAndNames for matches
-        // Will have to search through both halves of the map, code and name
-        // If found, return list of getModFromAPIUsingCode(Code of Map pair found)
-
-        // TODO Return a list of matching mods ordered by relevance
-        return CommandCenter.allModCodesAndNames.values().stream().filter(
-                        condensedMod -> condensedMod.getName().toLowerCase().contains(searchTerm.toLowerCase())
-                                || condensedMod.getCode().toLowerCase().contains(searchTerm.toLowerCase())
-                // map to full mods
-                ).map(condensedMod -> NUSModsAPI.fetchModuleByCode(condensedMod.getCode()))
-                // remove optionals
+        return CommandCenter.allModCodesAndNamesByYear.values().stream()
+                .flatMap(map -> map.values().stream())
+                .filter(condensedMod ->
+                        condensedMod.getName().toLowerCase().contains(searchTerm.toLowerCase()) ||
+                                condensedMod.getCode().toLowerCase().contains(searchTerm.toLowerCase()))
+                .map(condensedMod -> NUSModsAPI.fetchModuleByCode(condensedMod.getCode()))
                 .flatMap(Optional::stream)
                 .toList();
     }
+
 }
