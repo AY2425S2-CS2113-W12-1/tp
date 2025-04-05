@@ -31,21 +31,51 @@ public class CommandCenter {
     }
 
     /**
-     * Helper method that searches for an exact matching mod by its code or name.
+     * Attempts to retrieve detailed module information from a given module code or name.
+     * <p>
+     * This method searches through all available academic years in the
+     * {@code allModCodesAndNamesByYear} map. It first tries to match the input as a
+     * module code (case-insensitive), and if not found, it attempts to match by the
+     * module name (also case-insensitive).
+     * </p>
+     * <p>
+     * If a match is found, it calls {@code NUSModsAPI.fetchModuleByCode()} to retrieve
+     * the full {@code Mod} object with detailed information.
+     * </p>
      *
-     * @param modCodeOrNameGiven The code or name of the mod to search for.
-     * @return The mod that matches the given code or name, or null if no match is
-     *         found.
+     * @param modCodeOrNameGiven the module code or name entered by the user
+     * @return an {@code Optional<Mod>} containing the module details if found, or
+     *         {@code Optional.empty()} if no matching module was found
      */
-    public static Optional<Mod> modFromCodeOrName(String modCodeOrNameGiven) {
-        // First, check for a match with the module code (key)
-        Optional<CondensedMod> condensedMod = Optional.ofNullable(
-                allModCodesAndNames.get(modCodeOrNameGiven.toUpperCase())
-        );
 
-        // If a match is found, retrieve mod details using the module code
-        return condensedMod.flatMap(mod -> NUSModsAPI.fetchModuleByCode(mod.getCode()));
+    public static Optional<Mod> modFromCodeOrName(String modCodeOrNameGiven) {
+        String key = modCodeOrNameGiven.toUpperCase();
+        Optional<CondensedMod> foundMod = Optional.empty();
+
+        // check for a match with the module code across all years
+        for (Map<String, CondensedMod> yearMap : allModCodesAndNamesByYear.values()) {
+            if (yearMap.containsKey(key)) {
+                foundMod = Optional.of(yearMap.get(key));
+                break;
+            }
+        }
+
+        if (foundMod.isEmpty()) {
+            outer:
+            for (Map<String, CondensedMod> yearMap : allModCodesAndNamesByYear.values()) {
+                for (CondensedMod m : yearMap.values()) {
+                    if (m.getName().equalsIgnoreCase(modCodeOrNameGiven)) {
+                        foundMod = Optional.of(m);
+                        break outer;
+                    }
+                }
+            }
+        }
+
+        return foundMod.flatMap(mod -> NUSModsAPI.fetchModuleByCode(mod.getCode()));
     }
+
+
 
     /**
      * Helper method to extract a substring from the command input.
