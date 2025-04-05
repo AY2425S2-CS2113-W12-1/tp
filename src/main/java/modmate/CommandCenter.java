@@ -1,17 +1,24 @@
 package modmate;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 import modmate.command.CommandLine;
 import modmate.download.nusmods.NUSModsAPI;
+import modmate.download.nusmods.NUSModsUtil;
 import modmate.log.LogUtil;
 import modmate.mod.CondensedMod;
 import modmate.mod.Mod;
 import modmate.user.User;
 
 public class CommandCenter {
-    public static Map<String, CondensedMod> allModCodesAndNames = NUSModsAPI.fetchAllModCodes();
+
+    static Map<String, CondensedMod> currentYearMods = NUSModsAPI.fetchAllModCodes();
+
+    public static Map<String, Map<String, CondensedMod>> allModCodesAndNamesByYear = new HashMap<>() {{
+        put(String.valueOf(NUSModsUtil.getAdjustedYear()), currentYearMods);
+    }};
 
     private static final LogUtil logUtil = new LogUtil(CommandCenter.class);
 
