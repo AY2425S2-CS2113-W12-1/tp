@@ -4,44 +4,44 @@ title: Zhong Shu
 parent: About Us
 ---
 
-### Project: AddressBook Level 3
+### Project: ModMate
 
-AddressBook - Level 3 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+ModMate is a command-line tool that helps NUS students efficiently manage timetables and module information using the NUSMods API.
 
 Given below are my contributions to the project.
 
-* **New Feature**: Added the ability to undo/redo previous commands.
-  * What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
-  * Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
-  * Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-  * Credits: *{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}*
+* **New Feature**:  Added a `addmod` command that allows the user to add a mod to an timetable
+  * What it does: allows the user to add single or multiple mods from NUSMods to an existing timetable based on the module codes or names.
+  * Justification: Enables flexible timetable planning by letting users customise their schedules with specific modules they intend to take.  
+  * Highlights: Leverages modular data structures (Mod, CondensedMod) for efficient data handling and future scalability.
 
-* **New Feature**: Added a history command that allows the user to navigate to previous commands using up/down keys.
+* **New Feature**:  Added a `removemod` command that allows the user to remove a mod from an timetable
+  * What it does: Allows users to remove one or more modules from an existing timetable using their module codes or names.
+  * Justification: Provides users with control over their timetable by allowing the removal of unwanted or mistakenly added modules.
+  * Highlights: Ensures safe removal with checks for module existence.
 
-* **Code contributed**: [RepoSense link]()
+* **New Feature**: Added `addbreak` command that allows the user to add a break to an timetable
+  * What it does: Allows users to insert a labelled break period (e.g. Lunch, Study Time) into a specific timetable.
+  * Justification: Improves usability and realism of the timetable by allowing users to block out non-academic periods for better time management and schedule planning.
+  * Highlights: Enforces time format validation to avoid conflicts or input errors.
+
+* **Code contributed**: [RepoSense link](https://nus-cs2113-ay2425s2.github.io/tp-dashboard/?search=shuu4&sort=groupTitle&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2025-02-21)
 
 * **Project management**:
-  * Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+  * Release support:
+    * Contributed to the successful planning and rollout of the v2.0 release by aligning development tasks with key milestones and deliverables set by the team lead.
+  * Commitment to quality:
+    * Ensured timely delivery of assigned features and bug fixes while adhering to the team’s quality and testing standards, contributing to a stable and on-time release.
 
 * **Enhancements to existing features**:
-  * Updated the GUI color scheme (Pull requests [\#33](), [\#34]())
-  * Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests [\#36](), [\#38]())
+  * [\#90](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/90): Wrote additional tests for timetable package to increase coverage
 
 * **Documentation**:
   * User Guide:
-    * Added documentation for the features `delete` and `find` [\#72]()
-    * Did cosmetic tweaks to existing documentation of features `clear`, `exit`: [\#74]()
+    * Added documentation for the features `addmod` `removemod` and `addbreak`
   * Developer Guide:
-    * Added implementation details of the `delete` feature.
+    * Added implementation details of the `addmod` `removemod` and `addbreak`feature: [\#86](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/86), [\#98](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/98)
 
 * **Community**:
-  * PRs reviewed (with non-trivial review comments): [\#12](), [\#32](), [\#19](), [\#42]()
-  * Contributed to forum discussions (examples: [1](), [2](), [3](), [4]())
-  * Reported bugs and suggestions for other teams in the class (examples: [1](), [2](), [3]())
-  * Some parts of the history feature I added was adopted by several other class mates ([1](), [2]())
-
-* **Tools**:
-  * Integrated a third party library (Natty) to the project ([\#42]())
-  * Integrated a new Github plugin (CircleCI) to the team repo
-
-* _{you can add/remove categories in the list above}_
+  * PRs reviewed: [\#24](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/24), [\#89](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/89), [\#186](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/186)
+  * Bug fix: [\#178](https://github.com/AY2425S2-CS2113-W12-1/tp/pull/178)
