@@ -1,5 +1,6 @@
-package modmate.command;
+package modmate.command.mod;
 
+import modmate.command.Command;
 import modmate.command.util.Argument;
 import modmate.download.nusmods.NUSModsAPI;
 import modmate.exception.ApiException;

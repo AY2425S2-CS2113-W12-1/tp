@@ -1,8 +1,14 @@
-package modmate.command;
+package modmate.command.system;
 
 import java.util.List;
 import java.util.Optional;
 
+import modmate.command.Command;
+import modmate.command.CommandUtil;
+import modmate.command.bookmark.BookmarkCommand;
+import modmate.command.bookmark.GetBookmarksCommand;
+import modmate.command.mod.ViewAllModsCommand;
+import modmate.command.mod.ViewModCommand;
 import modmate.command.search.SearchModCommand;
 import modmate.command.util.Argument;
 import modmate.exception.CommandException;

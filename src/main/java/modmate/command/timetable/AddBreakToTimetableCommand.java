@@ -1,5 +1,6 @@
-package modmate.command;
+package modmate.command.timetable;
 
+import modmate.command.Command;
 import modmate.exception.ApiException;
 import modmate.exception.UserException;
 import modmate.exception.CommandException;

@@ -3,8 +3,8 @@ package modmate.ui;
 import java.util.Scanner;
 
 import modmate.command.Command;
-import modmate.command.ExitCommand;
-import modmate.command.HelpCommand;
+import modmate.command.system.ExitCommand;
+import modmate.command.system.HelpCommand;
 import modmate.exception.ApiException;
 import modmate.exception.CommandException;
 import modmate.exception.UserException;

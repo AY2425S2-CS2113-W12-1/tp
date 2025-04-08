@@ -1,22 +1,22 @@
 package modmate.ui;
 
-import modmate.command.BookmarkCommand;
+import modmate.command.bookmark.BookmarkCommand;
 import modmate.command.Command;
-import modmate.command.CreateTimetableCommand;
-import modmate.command.ExitCommand;
-import modmate.command.GetBookmarksCommand;
-import modmate.command.HelpCommand;
-import modmate.command.RemoveBookmarkCommand;
-import modmate.command.SetModLessonCommand;
-import modmate.command.ViewAllModsCommand;
-import modmate.command.ViewModCommand;
-import modmate.command.ViewModLessonsCommand;
-import modmate.command.ViewTimetableCommand;
+import modmate.command.timetable.CreateTimetableCommand;
+import modmate.command.system.ExitCommand;
+import modmate.command.bookmark.GetBookmarksCommand;
+import modmate.command.system.HelpCommand;
+import modmate.command.bookmark.RemoveBookmarkCommand;
+import modmate.command.mod.SetModLessonCommand;
+import modmate.command.mod.ViewAllModsCommand;
+import modmate.command.mod.ViewModCommand;
+import modmate.command.mod.ViewModLessonsCommand;
+import modmate.command.timetable.ViewTimetableCommand;
 import modmate.command.search.SearchModCommand;
 import modmate.exception.CommandException;
-import modmate.command.AddModToTimetableCommand;
-import modmate.command.RemoveModFromTimetableCommand;
-import modmate.command.AddBreakToTimetableCommand;
+import modmate.command.timetable.AddModToTimetableCommand;
+import modmate.command.timetable.RemoveModFromTimetableCommand;
+import modmate.command.timetable.AddBreakToTimetableCommand;
 
 public class CommandParser {
 

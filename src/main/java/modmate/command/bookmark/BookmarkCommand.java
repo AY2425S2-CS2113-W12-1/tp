@@ -1,5 +1,9 @@
-package modmate.command;
+package modmate.command.bookmark;
 
+import java.util.List;
+
+import modmate.command.Command;
+import modmate.command.CommandUtil;
 import modmate.command.util.Argument;
 import modmate.download.nusmods.NUSModsAPI;
 import modmate.exception.ApiException;
@@ -9,23 +13,21 @@ import modmate.mod.Mod;
 import modmate.ui.Input;
 import modmate.user.User;
 
-import java.util.List;
+public class BookmarkCommand extends Command {
 
-public class RemoveBookmarkCommand extends Command {
+    public static final String CLI_REPRESENTATION = "bookmark";
 
-    public static final String CLI_REPRESENTATION = "removebookmark";
-
-    private static final LogUtil logUtil = new LogUtil(RemoveBookmarkCommand.class);
+    private static final LogUtil logUtil = new LogUtil(BookmarkCommand.class);
 
     private final Argument<String> modIdentifierArg;
 
-    public RemoveBookmarkCommand(Input input) {
+    public BookmarkCommand(Input input) {
         super(input);
         this.modIdentifierArg = new Argument<>(
-                "mod code or name",
-                input.getArgument(),
-                "The code or name of the mod to remove bookmark.",
-                true
+            "mod code or name",
+            input.getArgument(),
+            "The code or name of the mod to bookmark.",
+            true
         );
 
         if (input.getArgument().isEmpty()) {
@@ -40,7 +42,7 @@ public class RemoveBookmarkCommand extends Command {
 
     @Override
     public String getDescription() {
-        return "Remove bookmark of a mod.";
+        return "Bookmark a mod for later reference.";
     }
 
     @Override
@@ -49,22 +51,23 @@ public class RemoveBookmarkCommand extends Command {
     }
 
     @Override
-    public void execute(User currentUser) {
+    public void execute(User currentUser) throws ApiException {
+        logUtil.info("Bookmarking mod.");
+
         modIdentifierArg.getValue()
             .ifPresent(identifier -> {
                 try {
                     Mod mod = NUSModsAPI.modFromIdentifier(identifier);
-                    if (!currentUser.hasBookmark(mod)) {
-                        logUtil.warning("Mod '" + mod.getCode() + "' not in bookmarks.");
-                        System.out.println("Mod " + mod.getCode() + " isn't in your bookmarks.");
-                        return;
-                    }
-                    currentUser.removeBookmark(mod);
-                    logUtil.info("Removed mod '" + mod.getCode() + "' from bookmarks.");
-                    System.out.println("Removed mod " + mod.getCode() + " from bookmarks.");
+
+                    // Bookmark a mod for later reference
+                    currentUser.addBookmark(mod);
+
+                    logUtil.info("Mod '" + identifier + "' bookmarked.");
+                    System.out.println("Bookmark " + identifier + " successfully added to your list.");
                 } catch (ApiException e) {
                     System.out.println(e.getMessage());
                 }
             });
     }
+
 }

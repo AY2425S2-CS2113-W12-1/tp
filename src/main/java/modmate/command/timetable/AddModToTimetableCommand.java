@@ -1,10 +1,13 @@
-package modmate.command;
+package modmate.command.timetable;
 
+import java.util.List;
 import java.util.Optional;
+import modmate.command.Command;
 import modmate.download.nusmods.NUSModsAPI;
 import modmate.exception.ApiException;
 import modmate.exception.CommandException;
 import modmate.exception.UserException;
+import modmate.mod.CondensedMod;
 import modmate.mod.Mod;
 import modmate.log.LogUtil;
 import modmate.ui.Input;
@@ -56,12 +59,30 @@ public class AddModToTimetableCommand extends Command {
 
         String upperModQuery = modQuery.toUpperCase();
 
-        Optional<Mod> modOpt = NUSModsAPI.fetchModuleByCode(upperModQuery.toUpperCase());
+        Optional<Mod> modOpt = Optional.empty();
+
+        if (NUSModsAPI.CONDENSED_MODS.containsKey(upperModQuery)) {
+            modOpt = NUSModsAPI.fetchModuleByCode(upperModQuery);
+        }
 
         if (modOpt.isEmpty()) {
-            System.out.println("Mod \"" + modQuery + "\" not found.");
-            logUtil.warning("Mod '" + modQuery + "' not found.");
-            return;
+            List<CondensedMod> matchingMods = NUSModsAPI.CONDENSED_MODS
+                    .values()
+                    .stream()
+                    .filter(cm -> cm.getName().equalsIgnoreCase(modQuery))
+                    .toList();
+
+            if (matchingMods.size() == 1) {
+                modOpt = NUSModsAPI.fetchModuleByCode(matchingMods.get(0).getCode());
+            } else if (matchingMods.size() > 1) {
+                System.out.println("Multiple modules found with that name. Please specify by module code:");
+                matchingMods.forEach(cm -> System.out.println("- " + cm.getCode() + ": " + cm.getName()));
+                return;
+            } else {
+                System.out.println("Mod \"" + modQuery + "\" not found.");
+                logUtil.warning("Mod name \"" + modQuery + "\" not found.");
+                return;
+            }
         }
 
         Mod mod = modOpt.get();

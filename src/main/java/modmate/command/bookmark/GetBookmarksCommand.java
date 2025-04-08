@@ -1,7 +1,9 @@
-package modmate.command;
+package modmate.command.bookmark;
 
 import java.util.List;
 
+import modmate.command.Command;
+import modmate.command.CommandUtil;
 import modmate.log.LogUtil;
 import modmate.mod.Mod;
 import modmate.ui.Input;

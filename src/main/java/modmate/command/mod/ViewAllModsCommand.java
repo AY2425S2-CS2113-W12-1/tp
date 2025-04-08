@@ -1,8 +1,10 @@
-package modmate.command;
+package modmate.command.mod;
 
 import java.util.List;
 import java.util.Map;
 
+import modmate.command.Command;
+import modmate.command.CommandUtil;
 import modmate.download.nusmods.NUSModsAPI;
 import modmate.log.LogUtil;
 import modmate.ui.Input;

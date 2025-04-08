@@ -1,5 +1,7 @@
-package modmate.command;
+package modmate.command.timetable;
 
+import modmate.command.Command;
+import modmate.command.CommandUtil;
 import modmate.command.util.Argument;
 import modmate.exception.CommandException;
 import modmate.exception.UserException;

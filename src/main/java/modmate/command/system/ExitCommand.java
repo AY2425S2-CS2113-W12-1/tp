@@ -1,5 +1,7 @@
-package modmate.command;
+package modmate.command.system;
 
+import modmate.command.Command;
+import modmate.command.CommandUtil;
 import modmate.log.LogUtil;
 import modmate.ui.Input;
 import modmate.user.User;
